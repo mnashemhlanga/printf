@@ -51,5 +51,7 @@ int _printf(const char *format, ...)
 	}
 	fwrite(buff, j, 1, stdout);
 	va_end(ap);
+	free(temp);
+	free(buff);
 	return (j);
 }
