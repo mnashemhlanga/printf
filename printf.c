@@ -49,7 +49,7 @@ int _printf(const char *format, ...)
 		}
 		i++;
 	}
-	write(1, buff, j);
+	fwrite(buff, j, 1, stdout);
 	va_end(ap);
 	return (j);
 }
