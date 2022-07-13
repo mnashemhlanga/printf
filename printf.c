@@ -70,6 +70,14 @@ void format_values(va_list list, const char *format, int *printed, int *count)
 			tobi = _tobinoct(num, 0, 2);
 			*printed  += tobi;
 			break;
+		case 'o':
+			num = va_arg(list, unsigned int);
+			tooc = _tobinoct(num, 0, 8);
+			*printed += tooc;
+			break;
+		case 'r':
+			format_string(list, printed, 'r');
+			break;
 		default:
 			*count += 1;
 			*printed += 1;
@@ -78,6 +86,49 @@ void format_values(va_list list, const char *format, int *printed, int *count)
 	}
 	if (!f)
 		*count += 2;
+}
+/**
+ * format_int - test number formats
+ * @list: list of args
+ * @printed: pointer to amount of printed chars
+ *  Return: void
+ */
+void format_int(va_list list, int *printed)
+{
+	int num = va_arg(list, int);
+
+	if (num <= 0)
+		*printed += 1;
+	_printd(num);
+	*printed += _numlen(num);
+}
+/**
+ * format_string - test string format
+ * @list: list of args
+ * @printed: pointer to amount of printed chars
+ * Return: void
+ */
+void format_string(va_list list, int *printed, char sr)
+{
+	char *s;
+
+	s = va_arg(list, char *);
+	if (s)
+	{
+		*printed += _strlen(s);
+		if (sr == 's')
+			_puts(s);
+		else
+			_printstr(s);
+	}
+	else
+	{
+		*printed += _strlen("(null)");
+		if (sr == 's')
+			_puts("(null)");
+		else
+			_printstr("(null)");
+	}
 }
 /**
  * main - Entry point
